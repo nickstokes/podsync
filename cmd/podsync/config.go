@@ -179,6 +179,10 @@ func (c *Config) applyDefaults(configPath string) {
 		if feed.PlaylistSort == "" {
 			feed.PlaylistSort = model.SortingAsc
 		}
+
+		if feed.EpisodeDating == "" {
+			feed.EpisodeDating = model.DatingPlaylistAdd
+		}
 	}
 }
 

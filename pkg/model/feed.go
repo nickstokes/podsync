@@ -29,6 +29,13 @@ const (
 	SortingAsc  = Sorting("asc")
 )
 
+type Dating string
+
+const (
+	DatingPlaylistAdd  = Dating("playlist_add")
+	DatingVideoPublish = Dating("video_publish")
+)
+
 type Episode struct {
 	// ID of episode
 	ID          string        `json:"id"`
@@ -64,6 +71,7 @@ type Feed struct {
 	Episodes        []*Episode `json:"-"`        // Array of episodes
 	UpdatedAt       time.Time  `json:"updated_at"`
 	PlaylistSort    Sorting    `json:"playlist_sort"`
+	EpisodeDating   Dating     `json:"episode_dating"` // Playlist add date or video publish
 	PrivateFeed     bool       `json:"private_feed"`
 }
 

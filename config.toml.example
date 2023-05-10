@@ -90,6 +90,9 @@ vimeo = [ # Multiple keys will be rotated.
   # When set to true, podcasts indexers such as iTunes or Google Podcasts will not index this podcast
   private_feed = true
 
+  # Whether to take the episode date from the date the video was added to the playlist, or when the video was PublishedAt
+  episode_dating = "playlist_add"  # 'playlist_add' or 'video_publish'
+
   # Optional feed customizations
   [feeds.ID1.custom]
   title = "Level1News"

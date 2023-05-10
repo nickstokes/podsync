@@ -44,6 +44,8 @@ type Config struct {
 	PrivateFeed bool `toml:"private_feed"`
 	// Playlist sort
 	PlaylistSort model.Sorting `toml:"playlist_sort"`
+	// Episode date
+	EpisodeDating model.Dating `toml:"episode_dating"`
 }
 
 type CustomFormat struct {

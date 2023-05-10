@@ -304,10 +304,14 @@ func (yt *YouTubeBuilder) queryVideoDescriptions(ctx context.Context, playlist m
 			// Parse date added to playlist / publication date
 			dateStr := ""
 			playlistItem, ok := playlist[video.Id]
-			if ok {
-				dateStr = playlistItem.PublishedAt
-			} else {
+			if feed.EpisodeDating == model.DatingVideoPublish {
 				dateStr = snippet.PublishedAt
+			} else {
+				if ok {
+					dateStr = playlistItem.PublishedAt
+				} else {
+					dateStr = snippet.PublishedAt
+				}
 			}
 
 			pubDate, err := yt.parseDate(dateStr)
@@ -335,7 +339,7 @@ func (yt *YouTubeBuilder) queryVideoDescriptions(ctx context.Context, playlist m
 			feed.Episodes = append(feed.Episodes, &model.Episode{
 				ID:          video.Id,
 				Title:       snippet.Title,
-				Description: snippet.Description,
+				Description: fmt.Sprintf("Video Link: %s \n\n %s", videoURL, snippet.Description),
 				Thumbnail:   image,
 				Duration:    seconds,
 				Size:        size,
@@ -420,6 +424,7 @@ func (yt *YouTubeBuilder) Build(ctx context.Context, cfg *feed.Config) (*model.F
 		PageSize:        cfg.PageSize,
 		PlaylistSort:    cfg.PlaylistSort,
 		PrivateFeed:     cfg.PrivateFeed,
+		EpisodeDating:   cfg.EpisodeDating,
 		UpdatedAt:       time.Now().UTC(),
 	}
 
