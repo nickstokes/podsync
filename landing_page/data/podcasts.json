@@ -1,0 +1,52 @@
+{
+	"podcast": [{
+			"podcast_id": "ems-live-performances-2023",
+			"podcast_name": "EMS All Live Performances 2023"
+		},
+		{
+			"podcast_id": "ems-chat-shows",
+			"podcast_name": "EMS Chat Shows"
+		},
+		{
+			"podcast_id": "monthular",
+			"podcast_name": "Earth Monthular"
+		}
+	],
+	"app": [{
+			"app_id": "apple",
+			"app_name": "Apple Podcasts",
+			"app_img": "img/apple.svg",
+			"app_uri": "podcast://emspod.stokesy.net/{podcast_id}.xml"
+		},
+		{
+			"app_id": "castro",
+			"app_name": "Castro",
+			"app_img": "img/castro.svg",
+			"app_uri": "castro://subscribe/emspod.stokesy.net/{podcast_id}.xml"
+		},
+		{
+			"app_id": "downcast",
+			"app_name": "Downcast",
+			"app_img": "img/downcast.svg",
+			"app_uri": "downcast://emspod.stokesy.net/{podcast_id}.xml"
+		},
+		{
+			"app_id": "google",
+			"app_name": "Google Podcasts",
+			"app_img": "img/google.svg",
+			"app_uri": "https://podcasts.google.com/subscribe-by-rss-feed"
+		},
+		{
+			"app_id": "overcast",
+			"app_name": "Overcast",
+			"app_img": "img/overcast.png",
+			"app_uri": "overcast://x-callback-url/add?url=https%3A%2F%2Femspod.stokesy.net%2F{podcast_id}.xml"
+		},
+		{
+			"app_id": "pocketcasts",
+			"app_name": "PocketCasts",
+			"app_img": "img/pocketcasts.svg",
+			"app_uri": "pktc://subscribe/emspod.stokesy.net/{podcast_id}.xml"
+		}
+	]
+}

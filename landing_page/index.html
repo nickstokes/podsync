@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>EMS Podcasts</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+	<script type="text/javascript" src="js/qrcode.min.js"> </script>
+	<script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script>
+	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"> </script>
+	<style>		
+		.app-icon a {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			justify-content: center;
+			padding: 8px;
+			font-size: 12px;
+			color: #444;
+			text-decoration: none;
+			text-align: center;
+		}
+
+		.app-icon i {
+			width: 32px;
+			height: 32px;
+			line-height: 32px;
+			text-align: center;
+		}
+	</style>
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <div class="container">
+        <a class="navbar-brand" href="#">Earth Modular Society Podcasts</a>
+      </div>
+    </nav>
+
+    <div class="container">
+		<div id="podcast_cards" class="row"></div>
+	</div>
+	<div id="podcast_modals"></div>
+	
+<script type="text/javascript">
+	function createQrCode(podcast, podcast_app) {
+			var qrcode_id = `qrcode-${podcast_app.app_id}-${podcast.podcast_id}`
+			var link_div_id = `link-${podcast_app.app_id}-${podcast.podcast_id}`;
+			var qrcode_text = `${podcast_app.app_uri}`.replace("{podcast_id}",podcast.podcast_id);
+			var qrcode = new QRCode(document.getElementById(qrcode_id), {
+				text: qrcode_text,
+				width: 128,
+				height: 128,
+				colorDark : "#000000",
+				colorLight : "#ffffff",
+				correctLevel : QRCode.CorrectLevel.H
+			});
+			document.getElementById(link_div_id).href=qrcode_text
+	};
+
+	function createModal(podcast, podcast_app) {
+		console.log(podcast_app);
+		podcast_url = podcast_app.app_uri.replace("{podcast_id", podcast.podcast_id);
+		qr_div_id = `qrcode-${podcast_app.app_id}-${podcast.podcast_id}`;
+		link_div_id = `link-${podcast_app.app_id}-${podcast.podcast_id}`;
+		var modal = `
+			<div class="modal fade" id="modal-${podcast_app.app_id}-${podcast.podcast_id}" tabindex="-1" aria-labelledby="modal-${podcast_app.app_id}-${podcast.podcast_id}" aria-hidden="true">
+				  <div class="modal-dialog">
+					<div class="modal-content">
+					  <div class="modal-header">
+						<h1 class="modal-title fs-5" id="modal-${podcast_app.app_id}-${podcast.podcast_id}">${podcast.podcast_name}</h1>
+						
+						<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+					  </div>
+					  <div class="modal-body d-inline-flex justify-content-center">
+						<a href="#" id="link-${podcast_app.app_id}-${podcast.podcast_id}"><img class="bi" width="128" height="128" src="${podcast_app.app_img}">
+						<div id="${qr_div_id}"></div>
+					  </div>
+					  <div class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+					  </div>
+					</div>
+				  </div>
+				</div>
+			 </div>`;
+		$(modal).appendTo("#podcast_modals");
+	}
+
+	
+	function createCard(podcast, podcast_apps) {
+		var podcastCard = `
+			<div class="card col-lg-3 my-3" >
+				<img src="https://emspod.stokesy.net/${podcast.podcast_id}/${podcast.podcast_id}.jpg" class="card-img-top" alt="${podcast.name}">
+				<div class="card-body">
+					<h5 class="card-title">${podcast.podcast_name}</h5>
+					<p class="card-text">
+						<small>
+							Copy and paste the following URL into your podcast app under an option like 'add by URL' or 'add RSS feed', or click one of the podcast app icons below for a QR code.
+						</small>
+					</p>
+						<p class="card-text">
+						<small>
+							Note: Spotify doesn't currently support private podcast feeds.
+						</small>
+					</p>
+				</div>
+				<div class="card-footer">
+					<span class="input-group">
+						<input type="text" class="form-control" id="url-${podcast.podcast_id}" value="https://emspod.stokesy.net/${podcast.podcast_id}.xml";></input>
+						<button class="btn btn-secondary" data-clipboard-text="https://emspod.stokesy.net/${podcast.podcast_id}.xml")>Copy</button>
+					</span>
+					<div class="app-icon row" id="podcast-icons-${podcast.podcast_id}"></div>
+				</div>
+			</div>`;
+		$(podcastCard).appendTo("#podcast_cards");
+	}
+	
+	function createPodcastIcon(podcast, podcast_app) {
+		var podcastIcon = `
+			<div class="col-4 app-icon">
+				<a data-bs-toggle="modal" data-bs-target="#modal-${podcast_app.app_id}-${podcast.podcast_id}" type="button">
+					<img class="bi" width="32" height="32" src="${podcast_app.app_img}">
+					<span>${podcast_app.app_name}</span>
+				</a>
+			</div>`;
+		$(podcastIcon).appendTo(`#podcast-icons-${podcast.podcast_id}`);
+	}
+	
+	$(function() {
+		new ClipboardJS('.btn');
+		$.getJSON('data/podcasts.json', function(data) {
+			podcasts = data.podcast;
+			podcast_apps = data.app;
+		
+			for (let i=0; i < podcasts.length; i++){
+				createCard(podcasts[i], podcast_apps);
+				for (let j=0; j < podcast_apps.length; j++) {
+					createModal(podcasts[i], podcast_apps[j]);
+					createQrCode(podcasts[i], podcast_apps[j]);
+					createPodcastIcon(podcasts[i], podcast_apps[j]);
+				}
+			};
+		});
+	});
+	</script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
+  
+  
+  </body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<html>
+<head>
+
+
+

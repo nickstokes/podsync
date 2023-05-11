@@ -27,6 +27,10 @@ and the date that the original video was uploaded.
 - Added the video link to the top of the description.
 - Includes the current EMS config (minus the youtube api key) in the config-ems.toml file.
 
+Also included is the landing page for the podcasts, copy the files from the `/landing_page` directory to the root of the configured 'data_dir'.  
+Make sure your podcast artwork is in the naming convention of `[data_dir]/[podcast_id]/[podcast_id].jpg`.  
+To add podcasts or podcast apps, edit the `podcasts.json` in the `/data` directory.
+
 To get the deployment working, I had to do the following
 - Replace youtube-dl binary with the latest yt-dlp fork.
 - Get a cookies.txt file (Netscape cookies format) from my browser.
