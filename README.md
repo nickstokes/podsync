@@ -18,6 +18,19 @@ remembering last played position, sync between devices and offline listening. Th
 on YouTube and Vimeo. So the aim of Podsync is to make your life easier and enable you to view/listen to content on
 any device in podcast client.
 
+## EMS specific stuff
+
+This fork is slightly modified to meet the needs of the Earth Modular Society.  
+Changes in this version:  
+- Added 'playlist_dating' option to switch the podcast episode date between the date the video was added to the playlist (default)
+and the date that the original video was uploaded.
+- Added the video link to the top of the description.
+- Includes the current EMS config (minus the youtube api key) in the config-ems.toml file.
+
+To get the deployment working, I had to do the following
+- Replace youtube-dl binary with the latest yt-dlp fork.
+- Get a cookies.txt file (Netscape cookies format) from my browser.
+
 ## Features
 
 - Works with YouTube and Vimeo.

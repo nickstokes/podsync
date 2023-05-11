@@ -1,0 +1,79 @@
+[server]
+port = 8088
+hostname = "https://emspod.stokesy.net"
+
+[storage]
+  [storage.local]
+  data_dir = "/mnt/emspod/"
+
+[tokens]
+youtube = "youtube_api_token_goes_here"
+
+[feeds]
+    [feeds.ems-chat-shows]
+    url = "https://www.youtube.com/playlist?list=PL-aGwJvkqGho4kd-twmhN5Fz1Z39Q_dTf"
+    quality = "high"
+    format = "audio"
+    private_feed = true
+    update_period = "1h"
+    page_size = 1000
+    playlist_sort = "desc"
+    episode_dating = "video_publish"
+    youtube_dl_args = ["--cookies", "/home/nick/podsync/cookies.txt", "--force-ipv4", "--audio-quality", "0"]
+
+    [feeds.ems-chat-shows.custom]
+    title = "Earth Modular Society: Chat Shows"
+    category = "Music"
+    cover_art = "https://emspod.stokesy.net/ems-chat-shows/ems-chat-shows.jpg"
+    author = "Earth Modular Society"
+    subcategories = ["Modular Synthesis", "Eurorack"]
+    description = "Earth Modular Society Chat Shows! All of your favorites including What The Heck, Sunday Massive, and WTFK?!"
+
+    
+   [feeds.ems-live-performances-2023]
+    url = "https://youtube.com/playlist?list=PL-aGwJvkqGhqHu6IsUg_KuU96GrEveP_9"
+    quality = "high"
+    format = "audio"
+    private_feed = true
+    update_period = "1h"
+    page_size = 1000
+    playlist_sort = "desc"
+    episode_dating = "video_publish"
+    youtube_dl_args = ["--cookies", "/home/nick/podsync/cookies.txt", "--force-ipv4", "--audio-quality", "0"]
+
+
+    [feeds.ems-live-performances-2023.custom]
+    title = "EMS All Live Performances 2023"
+    category = "Music"
+    author = "Earth Modular Society"
+    subcategories = ["Modular Synthesis", "Eurorack"]
+    cover_art = "https://emspod.stokesy.net/ems-live-performances-2023/ems-live-performances-2023.jpg"
+    description = "All Earth Modular Society live performances. Includes everything except for the live chat shows, which can be found in the EMS Chat Shows podcast at https://emspod.stokesy.net"
+
+
+    [feeds.monthular]
+    url = "https://youtube.com/playlist?list=PL-aGwJvkqGhqj_T7oIzuXuSUo38kSePVG"
+    quality = "high"
+    format = "audio"
+    private_feed = true
+    page_size = 1000
+    update_period = "1h"
+    playlist_sort = "desc"
+    episode_dating = "video_publish"
+    youtube_dl_args = ["--cookies", "/home/nick/podsync/cookies.txt", "--force-ipv4", "--audio-quality", "0"]
+
+    [feeds.monthular.custom]
+    title = "Earth Modular Society: Earth Monthular"
+    category = "Music"
+    author = "Earth Modular Society"
+    cover_art = "https://emspod.stokesy.net/monthular/monthular.jpg"
+    subcategories = ["Modular Synthesis", "Eurorack"]
+    description = "Earth Monthular is a theme to inspire your patches."
+
+[log]
+filename = "podsync.log"
+max_size = 50 # MB
+max_age = 30 # days
+max_backups = 7
+compress = true
+debug = false
