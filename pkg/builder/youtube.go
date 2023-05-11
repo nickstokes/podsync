@@ -304,14 +304,15 @@ func (yt *YouTubeBuilder) queryVideoDescriptions(ctx context.Context, playlist m
 			// Parse date added to playlist / publication date
 			dateStr := ""
 			playlistItem, ok := playlist[video.Id]
-			if feed.EpisodeDating == model.DatingVideoPublish {
-				dateStr = snippet.PublishedAt
-			} else {
+			switch feed.EpisodeDating {
+			case model.DatingPlaylistAdd:
 				if ok {
 					dateStr = playlistItem.PublishedAt
 				} else {
 					dateStr = snippet.PublishedAt
 				}
+			case model.DatingVideoPublish:
+				dateStr = snippet.PublishedAt
 			}
 
 			pubDate, err := yt.parseDate(dateStr)
